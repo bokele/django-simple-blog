@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block page_title %} Update profile | {% endblock %}
+
+  {% block content %}
+
+{% if  user.user_profile %}
+<img src="/media/{{ user.user_profile.profile_picture }}" class="img-fluid" alt="..."/>
+{% else %}
+<a type="button" class="btn btn-info" href="{% url 'app_login:change_profile_picture' %}">Change profile picture</a>
+{% endif %}
+
+
+<form   method="post">
+  {% csrf_token %}
+  {{ form_change_profile|crispy }}
+
+   <button type="submit" class="btn btn-primary">Save change</button>
+</form>
+
+
+  {% endblock %}

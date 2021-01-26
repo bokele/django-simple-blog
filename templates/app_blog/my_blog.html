@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load customer_filter %}
+{% block page_title %} Write a blog | {% endblock %}
+
+  {% block content %}
+
+  {%  for blog in user.post_author.all %}
+  <div class="col">
+    <div class="card">
+      <img src="/media/{{blog.blog_image}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ blog.blog_title }}</h5>
+        <p class="card-text">{{ blog.blog_content | range_filter}}</p>
+        <p class="card-text"> <a href="{% url 'app_blog:detail_blog' slug=blog.slug %}">More detail</a></p>
+        <p class="card-text"><small class="text-muted">Author: {{ blog.author}}</small></p>
+        <p class="card-text"><small class="text-muted">{{ blog.created_at }}</small></p>
+        <p class="card-text"><small class="text-muted">{{ blog.liked_blog.count }} Likes | {{ blog.blog_comment.count }} comments </small></p>
+  <p class="card-text"> <a href="{% url 'app_blog:edit_blog' pk=blog.pk %}">Edit</a></p>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+
+  {% endblock %}

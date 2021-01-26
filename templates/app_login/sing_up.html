@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block page_title %} Signup | {% endblock %}
+
+  {% block content %}
+  {% if registered %}
+  <div class="alert alert-success" role="alert">
+    A simple success alert—check it out!
+  </div>
+    {% else %}
+<form   method="post">
+  {% csrf_token %}
+  {{ sing_up_form|crispy }}
+
+   <button type="submit" class="btn btn-primary">Sign up</button>
+</form>
+  {% endif %}
+<p> Already have an account?<a href="#"> Sing in</a></p>
+  {% endblock %}

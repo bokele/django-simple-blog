@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load customer_filter %}
+{% block page_title %} Home | {% endblock %}
+
+  {% block content %}
+<div class="row row-cols-1 row-cols-md-2 g-4">
+{% for blog in blogs %}
+
+  <div class="col">
+    <div class="card">
+      <img src="/media/{{blog.blog_image}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ blog.blog_title }}</h5>
+        <p class="card-text">{{ blog.blog_content | range_filter}}</p>
+        <p class="card-text"> <a href="{% url 'app_blog:detail_blog' slug=blog.slug %}">More detail</a></p>
+        <p class="card-text"><small class="text-muted">Author: {{ blog.author}}</small></p>
+        <p class="card-text"><small class="text-muted">{{ blog.created_at }}</small></p>
+        <p class="card-text"><small class="text-muted">{{ blog.liked_blog.count }} Likes | {{ blog.blog_comment.count }} comments </small></p>
+      </div>
+    </div>
+  </div>
+
+
+{% endfor %}
+</div>
+{% endblock %}

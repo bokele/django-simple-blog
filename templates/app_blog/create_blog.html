@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block page_title %} Write a blog | {% endblock %}
+
+  {% block content %}
+
+  <form   method="post" class="row g-3" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+  <div class="col-12">
+     <button type="submit" class="btn btn-primary"><i class="far fa-save"></i>  Save</button>
+      </div>
+  </form>
+
+  {% endblock %}

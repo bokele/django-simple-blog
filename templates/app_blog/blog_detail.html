@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load customer_filter %}
+{% load crispy_forms_tags %}
+{% block page_title %} Home | {% endblock %}
+
+  {% block content %}
+<div class="row row-cols-1 row-cols-md-2 g-4">
+
+
+  <div class="col">
+    <div class="card">
+      <img src="/media/{{blog_detail.blog_image}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ blog_detail.blog_title }}</h5>
+        <p class="card-text">{{ blog_detail.blog_content }}</p>
+
+        <p class="card-text"><small class="text-muted">Author: {{ blog_detail.author}}</small></p>
+        <p class="card-text"><small class="text-muted">{{ blog_detail.created_at }}</small></p>
+        <p class="card-text"><small class="text-muted">{{ blog_detail.liked_blog.count }} Likes | {{ blog_detail.blog_comment.count }} comments </small></p>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+{% if not liked %}
+<a href="{% url 'app_blog:liked_post' pk=blog_detail.pk %}"><i class="far fa-thumbs-up"></i></a>
+{% else %}
+<a href="{% url 'app_blog:unliked_post' pk=blog_detail.pk  %}"><i class="far fa-thumbs-down"></i></a>
+{% endif %}
+<div class="row">
+  <div class="col-md-6">
+      <h5> Comments</h5>
+      {% for comment in blog_detail.blog_comment.all %}
+      <p>{{ comment.user }}</p>
+      <p>{{ comment.comment }}</p>
+<p>{{ comment.created_at }}</p>
+      {% endfor %}
+  <div>
+  <div class="col-md-6">
+          <form  method="post">
+            {% csrf_token %}
+            {{ comment_form|crispy }}
+            <div class="col-12">
+               <button type="submit" class="btn btn-primary"><i class="far fa-send"></i>  Comment</button>
+                </div>
+          </form>
+      <div>
+</div>
+
+{% endblock %}
